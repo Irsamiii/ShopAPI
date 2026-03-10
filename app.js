@@ -2,9 +2,18 @@ const express = require('express');
 const app = express();
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 
 const productRoutes = require('./api/routes/products');
 const orderRoutes = require('./api/routes/orders');
+
+mongoose.connect(`mongodb+srv://samuella_db_user:${process.env.MONGO_ATLAS_PW}@shop-api.f8jdqme.mongodb.net/?appName=Shop-API`)
+    .then(() => {
+        console.log('Connected to MongoDB Atlas');
+    })
+    .catch((error) => {
+        console.log('Connection failed:', error);
+    });
 
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({extended: false}));
