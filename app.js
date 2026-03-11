@@ -7,12 +7,16 @@ const mongoose = require('mongoose');
 const productRoutes = require('./api/routes/products');
 const orderRoutes = require('./api/routes/orders');
 
-mongoose.connect(`mongodb+srv://samuella_db_user:${process.env.MONGO_ATLAS_PW}@shop-api.f8jdqme.mongodb.net/?appName=Shop-API`)
+const pw = encodeURIComponent(process.env.MONGO_ATLAS_PW);
+
+const dbURI = `mongodb+srv://samuella_db_user:${pw}@shop-api.liydcbx.mongodb.net/?appName=shop-api`;
+
+mongoose.connect(dbURI)
     .then(() => {
         console.log('Connected to MongoDB Atlas');
     })
     .catch((error) => {
-        console.log('Connection failed:', error);
+        console.error('MongoDB Connection Error:', error.message);
     });
 
 app.use(morgan('dev'));
